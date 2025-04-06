@@ -1,4 +1,4 @@
-public class Sample { // これはJavaの学習用のコードです
+public class StudySpace { // これはJavaの学習用のコードです
     public static void main(String[] args) {
         try (java.util.Scanner scanner = new java.util.Scanner(System.in)) {
             long startTime = System.currentTimeMillis(); // 開始時間を記録

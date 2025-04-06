@@ -1,4 +1,4 @@
-package chapter_3.makeSelf;
+package chapter_3;
 
 public class fibonacci { // これはJavaの練習コードです
     public static void main(String[] args) {
