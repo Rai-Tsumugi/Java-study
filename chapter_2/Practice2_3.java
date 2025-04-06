@@ -1,6 +1,6 @@
 package chapter_2;
 
-public class Main3 {
+public class Practice2_3 {
     public static void main(String[] args) {
         try (java.util.Scanner scanner = new java.util.Scanner(System.in)) {
             System.out.println("ようこそ占いの館へ");
