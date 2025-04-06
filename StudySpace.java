@@ -1,38 +1,49 @@
-public class StudySpace { // これはJavaの学習用のコードです
+import java.util.Random;
+
+public class StudySpace {
     public static void main(String[] args) {
-        try (java.util.Scanner scanner = new java.util.Scanner(System.in)) {
-            long startTime = System.currentTimeMillis(); // 開始時間を記録
+        // 開始時間を取得
+        long startTime = System.currentTimeMillis();
 
-            System.out.println("計算を行う時間を入力してください。(秒数)"); // ユーザーに入力を促す
-            int time = scanner.nextInt(); // ユーザーからの入力を受け取る
-            System.out.println("計算を開始します。"); // 計算開始のメッセージを表示
+        int length = 1_000_000; // 配列の長さ
+        char[] base = {'A', 'T', 'C', 'G'}; // 塩基の種類
+        Random random = new Random();
 
-            // フィボナッチ数列の計算
-            int i = 0; // カウンタ
-            int a = 0, b = 1, c = 0; // フィボナッチ数列の初期値
+        /*
+         *  10 文字ごとに空白、100 文字ごとに改行を入れるので、
+         *  length の要素数に加えて、その分だけ余裕を見たバッファを用意します。
+         *  （length/10 個程度の空白 + length/100 個程度の改行 + α ）
+         */
+        char[] outputBuffer = new char[length + length / 10 + length / 100 + 10];
 
-            i++; // カウンタをインクリメント
-            System.out.print(i + " : " + a + "\t"); // 初期値を表示
-            i++; // カウンタをインクリメント
-            System.out.print(i + " : " + b + "\t"); // 初期値を表示
+        // バッファに書き込んだ要素数を数える
+        int pos = 0;
 
-            while (System.currentTimeMillis() - startTime < time * 1000) { // 指定時間内に計算を行う
-                i++; // カウンタをインクリメント
+        // length 回だけランダム塩基を生成してバッファに格納
+        for (int i = 0; i < length; i++) {
+            // ランダムで 0..3 の整数を取得し、その塩基を char 配列に書き込む
+            outputBuffer[pos++] = base[random.nextInt(4)];
 
-                c = a + b; // フィボナッチ数列の計算
-                a = b; // 次の値のために更新
-                b = c; // 次の値のために更新
-                System.out.print(i + " : " + c + "\t"); // 計算結果を表示
-                if (c % 10 == 0) { // 10個ごとに改行
-                    System.out.println(); // 改行
+            // 10文字おきに空白、100文字おきに改行を入れる(元コードのロジックを踏襲)
+            if (i != 0 && i % 10 == 0) {
+                // 100文字ごとかどうか
+                if (i % 100 == 0) {
+                    outputBuffer[pos++] = '\n';
+                } else {
+                    outputBuffer[pos++] = ' ';
                 }
             }
-
-            System.out.println(time + "秒で" + i + "個の計算を行いました。"); // 結果を表示
-
-        } catch (Exception e) {
-            System.out.println("エラーが発生しました: " + e.getMessage()); // エラーメッセージを表示
         }
 
+        // まとめて出力
+        System.out.print(new String(outputBuffer, 0, pos));
+
+        // 終了時間を取得
+        long endTime = System.currentTimeMillis();
+        // 動作時間を計算
+        double duration = (endTime - startTime) / 1000.0;
+        // 動作時間を表示
+        System.out.println();
+        System.out.println("動作時間: " + duration + "秒");
     }
 }
